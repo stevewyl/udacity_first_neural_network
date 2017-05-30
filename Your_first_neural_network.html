@@ -11998,7 +11998,7 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x2be72cae3c8&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a50af5f048&gt;</pre>
 </div>
 
 </div>
@@ -13368,7 +13368,7 @@ height=263
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">NeuralNetwork</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -13420,13 +13420,13 @@ height=263
             <span class="c1"># TODO: Hidden layer - Replace these values with your calculations.</span>
             <span class="n">hidden_inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights_input_to_hidden</span><span class="p">)</span> <span class="c1"># signals into hidden layer</span>
             <span class="n">hidden_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span><span class="p">(</span><span class="n">hidden_inputs</span><span class="p">)</span> <span class="c1"># signals from hidden layer</span>
-            <span class="c1"># shape (2,1)</span>
+            <span class="c1"># test: shape (1,2)</span>
             
             <span class="c1"># TODO: Output layer - Replace these values with your calculations.</span>
             <span class="n">final_inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">hidden_outputs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights_hidden_to_output</span><span class="p">)</span> <span class="c1"># signals into final output layer</span>
             <span class="c1"># we want our outputs to be the number of bikes so no need to use sigmoid to calculate the probabillities</span>
             <span class="n">final_outputs</span> <span class="o">=</span> <span class="n">final_inputs</span> <span class="c1"># signals from final output layer</span>
-            <span class="c1">#shape(1,1)</span>
+            <span class="c1"># test: shape(1,1)</span>
             
             <span class="c1">#### Implement the backward pass here ####</span>
             <span class="c1">### Backward pass ###</span>
@@ -13435,17 +13435,18 @@ height=263
             <span class="n">error</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">final_outputs</span> <span class="c1"># Output layer error is the difference between desired target and actual output.</span>
             
             <span class="c1"># TODO: Calculate the hidden layer&#39;s contribution to the error</span>
-            <span class="n">hidden_error</span> <span class="o">=</span> <span class="n">error</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights_hidden_to_output</span> <span class="c1"># shape (2,1)</span>
+            <span class="n">hidden_error</span> <span class="o">=</span> <span class="n">error</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights_hidden_to_output</span> <span class="c1"># test: shape (2,1)</span>
             
             <span class="c1"># TODO: Backpropagated error terms - Replace these values with your calculations.</span>
             <span class="n">output_error_term</span> <span class="o">=</span> <span class="n">error</span> <span class="o">*</span> <span class="mi">1</span> 
-            <span class="n">hidden_error_term</span> <span class="o">=</span> <span class="n">hidden_error</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">hidden_outputs</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">hidden_outputs</span><span class="p">)</span> <span class="c1"># shape(1,2)</span>
+            <span class="n">hidden_error_term</span> <span class="o">=</span> <span class="n">hidden_error</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">hidden_outputs</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">hidden_outputs</span><span class="p">)</span> <span class="c1"># test: shape(1,2)</span>
 
             <span class="c1"># Weight step (input to hidden)</span>
-            <span class="n">delta_weights_i_h</span> <span class="o">+=</span> <span class="n">hidden_error_term</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span>
-            <span class="c1"># Weight step (hidden to output)</span>
-            <span class="n">delta_weights_h_o</span> <span class="o">+=</span> <span class="n">output_error_term</span> <span class="o">*</span> <span class="n">hidden_outputs</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span>
+            <span class="n">delta_weights_i_h</span> <span class="o">+=</span> <span class="n">hidden_error_term</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="c1"># test: shape(3,2)</span>
 
+            <span class="c1"># Weight step (hidden to output)</span>
+            <span class="n">delta_weights_h_o</span> <span class="o">+=</span> <span class="n">output_error_term</span> <span class="o">*</span> <span class="n">hidden_outputs</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="c1"># test: shape(2,1)</span>
+            
         <span class="c1"># TODO: Update the weights - Replace these values with your calculations.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weights_hidden_to_output</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">delta_weights_h_o</span> <span class="o">/</span> <span class="n">n_records</span> <span class="c1"># update hidden-to-output weights with gradient descent step</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weights_input_to_hidden</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">delta_weights_i_h</span> <span class="o">/</span> <span class="n">n_records</span> <span class="c1"># update input-to-hidden weights with gradient descent step</span>
@@ -13501,7 +13502,7 @@ height=263
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
@@ -13576,14 +13577,14 @@ height=263
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.....
 ----------------------------------------------------------------------
-Ran 5 tests in 0.014s
+Ran 5 tests in 0.008s
 
 OK
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -16389,7 +16390,7 @@ height=272
 </li>
 </ol>
 <p>但是模型在3000次后才稳定，而之前的模型在300次后就出现稳定，模型很不稳定，第二次同样参数loss为0.165</p>
-<p>问题：波峰波谷差异较大的日期预测基本正确，但是波峰波谷差异较小的日期，在波峰预测上大大超过原始数据，而我们发现那几天正好是圣诞假期，所以人们骑车的次数会大大减少，模型可能没有学习到这个特征</p>
+<p>问题：波峰波谷差异较大的日期预测基本正确，但是波峰波谷差异较小的日期，在波峰预测上大大超过原始数据，而我们发现那几天正好是圣诞假期，所以人们骑车的次数会大大减少，模型可能没有学习到这个特征,可能需要再多一层隐层去学习这个特征</p>
 
 </div>
 </div>
